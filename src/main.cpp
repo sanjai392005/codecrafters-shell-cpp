@@ -29,7 +29,7 @@ int main(){
 
             if(command.size()==4){ continue; }
             else if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
-            else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": command not found" << endl;
+            else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": not found" << endl;
 
         }
         else{
