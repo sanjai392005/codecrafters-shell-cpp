@@ -29,7 +29,7 @@ vector<std::string> path_dealer(){ //splits the PATH at occurence of ':' and sto
     return paths;
 }
 
-std::string program_existence(std::vector<std::string> paths, std::string target){
+std::string program_existence(std::vector<std::string> paths, std::string target){ //checks if the program exists
     int isPresent = 0;
 
     for(std::string i: paths){
