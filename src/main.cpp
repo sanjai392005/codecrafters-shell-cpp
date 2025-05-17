@@ -19,17 +19,17 @@ int main(){
         }
         else if(command.substr(0, 4)=="echo"){
 
-            if(command.size()==4) continue;
+            if(command.size()==4){continue;}
             else cout<<command.substr(5, command.size())<<endl;
 
         }
         else if(command.substr(0, 4)=="type"){
-
-            string suffix = command.substr(5, command.size());
-
             if(command.size()==4){ continue; }
-            else if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
-            else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": not found" << endl;
+            else{
+                string suffix = command.substr(5, command.size());
+                if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
+                else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": not found" << endl;
+            }
 
         }
         else{
