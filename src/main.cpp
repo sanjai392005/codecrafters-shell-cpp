@@ -9,6 +9,6 @@ int main(){
     string input;
     cin>>input;
     cout<<input << ": command not found" << endl;
-    cout<<"$ exit 0";
+    cout<<"$ exit 0"<<endl;
     main();
 }
