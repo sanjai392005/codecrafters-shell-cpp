@@ -10,5 +10,5 @@ int main(){
     cin>>input;
     cout<<input << ": command not found" << endl;
     cout<<"$ exit 0"<<endl;
-    main();
+
 }
