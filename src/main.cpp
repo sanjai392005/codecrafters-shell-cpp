@@ -83,9 +83,9 @@ int main(){
 
         }
 
-        // else{
-        //     cout<<command<<": command not found" << endl;
-        // }
+        else{
+            cout<<command<<": command not found" << endl;
+        }
     }
 
     return 0;
