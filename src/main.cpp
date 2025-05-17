@@ -1,9 +1,9 @@
 #include <iostream>
-#include <string>
-int main() {
-  std::cout << std::unitbuf;
-  std::cerr << std::unitbuf;
-  std::cout<<"$ ";
-  std::string input;
-  std::getline(std::cin, input);
+using namespace std;
+
+int main(){
+    string input;
+    cin>>input;
+
+    cout<<input << ": command not found" << endl;
 }
