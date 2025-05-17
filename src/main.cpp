@@ -43,9 +43,8 @@ std::string program_existence(std::vector<std::string> paths, std::string target
         }
     }
 
-    if(isPresent==0){
-        return target+": not found"+"\n";
-    }
+    return target+": not found"+"\n";
+    
 }
 
 int main(){
