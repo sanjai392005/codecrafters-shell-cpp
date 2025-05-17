@@ -10,8 +10,14 @@ int main(){
         string command;
         cout<<"$ ";
         getline(cin, command);
-        if(command=="exit 0") return 0;
-        cout<<command<<": command not found" << endl;
+
+        if(command=="exit 0"){
+            return 0;
+        }else if(command.substr(0, 4)=="echo"){
+            cout<<command.substr(5, command.size())<<endl;
+        }else{
+            cout<<command<<": command not found" << endl;
+        }
     }
 
 }
