@@ -7,7 +7,7 @@ int main(){
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
-    set<string> shell_commands = {"type", "echo"};
+    set<string> shell_commands = {"type", "echo", "exit"};
 
     while(true){
         string command;
@@ -30,7 +30,7 @@ int main(){
             if(command.size()==4){ continue; }
             else if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
             else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": command not found" << endl;
-            
+
         }
         else{
             cout<<command<<": command not found" << endl;
