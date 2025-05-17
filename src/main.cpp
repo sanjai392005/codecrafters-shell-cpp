@@ -1,14 +1,17 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 int main(){
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
-    std::cout << "$ ";
 
-    string input;
-    cin>>input;
-    cout<<input << ": command not found" << endl;
-    cout<<"$ exit 0"<<endl;
+    while(true){
+        string command;
+        cout<<"$ ";
+        getline(cin, command);
+        if(command=="exit 0") return 0;
+        cout<<command<<": command not found" << endl;
+    }
 
 }
