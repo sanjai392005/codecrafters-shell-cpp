@@ -7,6 +7,8 @@
 using namespace std;
 namespace fs = std::filesystem;
 
+std::string command_path = "";
+
 vector<std::string> path_dealer(){ //splits the PATH at occurence of ':' and stores the individual paths in a vector
     std::vector<std::string> paths;
     std::string env_path = std::getenv("PATH");
@@ -47,6 +49,45 @@ std::string program_existence(std::vector<std::string> paths, std::string target
     
 }
 
+
+bool bool_program_existence(std::vector<std::string> paths, std::string target){
+    for(std::string i: paths){
+        fs::path current_path = i;
+
+        for(const auto &entry: fs::directory_iterator(current_path)){
+            if(entry.path().filename() == target){
+                command_path+=entry.path();
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+
+std::vector<std::string> command_argument_seperator(std::string input){// seperates the command from the arguments and stores everything in a vector
+    std::vector<std::string> result;
+    std::string word = "";
+    for(char i: input){
+        if(i!=' '){
+            word+=i;
+        }
+        else{
+            result.push_back(word);
+            word = "";
+        }
+    }
+    if(word!=""){
+        result.push_back(word);
+    }
+
+    return result;
+}
+
+
+
 int main(){
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
@@ -57,6 +98,10 @@ int main(){
         string command;
         cout<<"$ ";
         getline(cin, command);
+
+        std::vector<std::string> commands_arguments = command_argument_seperator(command);
+        vector<string> paths = path_dealer();
+
 
         if(command=="exit 0" || command=="exit"){// INBUILT: exit
             return 0;
@@ -75,13 +120,21 @@ int main(){
                 if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
                 //else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": not found" << endl;
                 else{
-                    vector<string> paths = path_dealer();
                     cout<<program_existence(paths, suffix);
                 }
 
             }
 
         }
+
+        else if(bool_program_existence(paths, commands_arguments[0])){
+            for(int i=1; i<commands_arguments.size(); i++){
+                std:string space = " ";
+                command_path = command_path + space + commands_arguments[i];
+            }
+            std::system(command_path.c_str());
+        }
+        
 
         else{
             cout<<command<<": command not found" << endl;
