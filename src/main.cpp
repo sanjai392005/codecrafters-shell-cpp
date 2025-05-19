@@ -7,7 +7,7 @@
 using namespace std;
 namespace fs = std::filesystem;
 
-std::string command_path = "";
+fs::path command_path;
 
 vector<std::string> path_dealer(){ //splits the PATH at occurence of ':' and stores the individual paths in a vector
     std::vector<std::string> paths;
@@ -56,7 +56,9 @@ bool bool_program_existence(std::vector<std::string> paths, std::string target){
 
         for(const auto &entry: fs::directory_iterator(current_path)){
             if(entry.path().filename() == target){
-                command_path+=entry.path();
+                //command_path=entry.path(); 
+                command_path = entry.path().filename();// as per the constraints taht was given in the problem, command should be executed as is and not using its full path
+
                 return true;
             }
         }
@@ -130,7 +132,7 @@ int main(){
         else if(bool_program_existence(paths, commands_arguments[0])){
             for(int i=1; i<commands_arguments.size(); i++){
                 std:string space = " ";
-                command_path = command_path + space + commands_arguments[i];
+                string final_command_path = command_path.string() + space + commands_arguments[i];
             }
             std::system(command_path.c_str());
         }
