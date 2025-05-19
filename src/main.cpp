@@ -31,7 +31,7 @@ vector<std::string> path_dealer(){ //splits the PATH at occurence of ':' and sto
     return paths;
 }
 
-std::string program_existence(std::vector<std::string> paths, std::string target){ //checks if the program exists
+std::string program_existence(std::vector<std::string> paths, std::string target){ //checks if the program exists in PATH
     int isPresent = 0;
 
     for(std::string i: paths){
@@ -50,7 +50,7 @@ std::string program_existence(std::vector<std::string> paths, std::string target
 }
 
 
-bool bool_program_existence(std::vector<std::string> paths, std::string target){
+bool bool_program_existence(std::vector<std::string> paths, std::string target){// returns true if file(in our case the program) exists in PATH
     for(std::string i: paths){
         fs::path current_path = i;
 
@@ -129,11 +129,11 @@ int main(){
 
         }
 
-        else if(bool_program_existence(paths, commands_arguments[0])){
+        else if(bool_program_existence(paths, commands_arguments[0])){// command execution
             string final_command_path = command_path.string();
             std:string space = " ";
 
-            for(int i=1; i<commands_arguments.size(); i++){
+            for(int i=1; i<commands_arguments.size(); i++){// the system method takes the command and the argument together as one single character array. so appending the command with a space and the argument and converting it to character array using c_str and then passing into system method
                 final_command_path += space + commands_arguments[i];
             }
             std::system(final_command_path.c_str());
