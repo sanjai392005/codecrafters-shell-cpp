@@ -133,7 +133,10 @@ int main(){
         }
         else if(commands_arguments[0]=="cd"){
             fs::path destination = commands_arguments[1];
-            fs::current_path(destination);
+            fs::directory_entry entry{destination};
+            
+            if(entry.exists()) fs::current_path(destination);
+            else cout<<"cd: "<<destination.string()<<": No such file or directory"<<"\n";
         }
 
         else if(bool_program_existence(paths, commands_arguments[0])){// command execution
