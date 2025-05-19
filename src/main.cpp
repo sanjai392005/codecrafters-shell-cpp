@@ -135,7 +135,8 @@ int main(){
             fs::path destination = commands_arguments[1];
             fs::directory_entry entry{destination};
             
-            if(entry.exists()) fs::current_path(destination);
+            if(commands_arguments[1]=="~") fs::current_path("/home");
+            else if(entry.exists()) fs::current_path(destination);
             else cout<<"cd: "<<destination.string()<<": No such file or directory"<<"\n";
         }
 
