@@ -128,6 +128,9 @@ int main(){
             }
 
         }
+        else if(commands_arguments[0]=="pwd"){
+            cout<<fs::current_path().string()<<'\n';// converted it to string cuz directly printing the current_path() adds quotation marks
+        }
 
         else if(bool_program_existence(paths, commands_arguments[0])){// command execution
             string final_command_path = command_path.string();
