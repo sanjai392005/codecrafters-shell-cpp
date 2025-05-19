@@ -94,7 +94,7 @@ int main(){
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
-    set<string> shell_commands = {"type", "echo", "exit"};
+    set<string> shell_commands = {"type", "echo", "exit", "pwd"};
 
     while(true){
         string command;
@@ -108,16 +108,16 @@ int main(){
         if(command=="exit 0" || command=="exit"){// INBUILT: exit
             return 0;
         }
-        else if(command.substr(0, 4)=="echo"){// INBUILT: echo
+        else if(commands_arguments[0]=="echo"){// INBUILT: echo
 
-            if(command.size()==4){continue;}
+            if(commands_arguments.size()==1){continue;}
             else cout<<command.substr(5, command.size())<<endl;
 
         }
-        else if(command.substr(0, 4)=="type"){// INBUILT: type
-            if(command.size()==4){ continue; }
+        else if(commands_arguments[0]=="type"){// INBUILT: type
+            if(commands_arguments.size()==1){ continue; }
             else{
-                string suffix = command.substr(5, command.size());
+                string suffix = command.substr(5, command.size());// ex: type echo --> echo is the suffix
 
                 if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
                 //else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": not found" << endl;
