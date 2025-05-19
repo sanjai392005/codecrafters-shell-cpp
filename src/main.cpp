@@ -130,9 +130,10 @@ int main(){
         }
 
         else if(bool_program_existence(paths, commands_arguments[0])){
+            string final_command_path = "";
             for(int i=1; i<commands_arguments.size(); i++){
                 std:string space = " ";
-                string final_command_path = command_path.string() + space + commands_arguments[i];
+                final_command_path = command_path.string() + space + commands_arguments[i];
             }
             std::system(command_path.c_str());
         }
