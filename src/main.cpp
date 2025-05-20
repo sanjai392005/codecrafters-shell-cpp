@@ -4,12 +4,11 @@
 #include <set>
 #include <vector>
 #include <filesystem>
-using namespace std;
 namespace fs = std::filesystem;
 
 fs::path command_path;
 
-vector<std::string> path_dealer(){ //splits the PATH at occurence of ':' and stores the individual paths in a vector
+std::vector<std::string> path_dealer(){ //splits the PATH at occurence of ':' and stores the individual paths in a vector
     std::vector<std::string> paths;
     std::string env_path = std::getenv("PATH");
 
@@ -74,7 +73,8 @@ std::vector<std::string> command_argument_seperator(std::string input){// sepera
     std::string word = "";
     for(char i: input){
         if(i!=' '){
-            word+=i;
+            if(i=='\'') continue;// dealing with single quotes according to posix
+            else word+=i;
         }
         else{
             result.push_back(word);
@@ -88,21 +88,25 @@ std::vector<std::string> command_argument_seperator(std::string input){// sepera
     return result;
 }
 
-
+std::string quotation_dealer(std::vector<std::string> commands_arguments){
+    if(commands_arguments[1][0]=='\''){// argument (index 1 in the commands_arguments vector) starts with a ' (index 0 of the command element at index 1 in teh vector) == we are dealing with single quotations
+        // TO DO
+    }
+}
 
 int main(){
     std::cout << std::unitbuf;
     std::cerr << std::unitbuf;
 
-    set<string> shell_commands = {"type", "echo", "exit", "pwd"};
+    std::set<std::string> shell_commands = {"type", "echo", "exit", "pwd"};
 
     while(true){
-        string command;
-        cout<<"$ ";
-        getline(cin, command);
+        std::string command;
+        std::cout<<"$ ";
+        std::getline(std::cin, command);
 
         std::vector<std::string> commands_arguments = command_argument_seperator(command);
-        vector<string> paths = path_dealer();
+        std::vector<std::string> paths = path_dealer();
 
 
         if(command=="exit 0" || command=="exit"){// INBUILT: exit
@@ -111,25 +115,25 @@ int main(){
         else if(commands_arguments[0]=="echo"){// INBUILT: echo
 
             if(commands_arguments.size()==1){continue;}
-            else cout<<command.substr(5, command.size())<<endl;
+            else std::cout<<command.substr(5, command.size())<<std::endl;
 
         }
         else if(commands_arguments[0]=="type"){// INBUILT: type
             if(commands_arguments.size()==1){ continue; }
             else{
-                string suffix = command.substr(5, command.size());// ex: type echo --> echo is the suffix
+                std::string suffix = command.substr(5, command.size());// ex: type echo --> echo is the suffix
 
-                if(shell_commands.find(suffix)!=shell_commands.end()) cout<<suffix<<" is a shell builtin"<<endl;
+                if(shell_commands.find(suffix)!=shell_commands.end()) std::cout<<suffix<<" is a shell builtin"<<std::endl;
                 //else if(shell_commands.find(suffix)==shell_commands.end()) cout<<suffix<<": not found" << endl;
                 else{
-                    cout<<program_existence(paths, suffix);
+                    std::cout<<program_existence(paths, suffix);
                 }
 
             }
 
         }
         else if(commands_arguments[0]=="pwd"){
-            cout<<fs::current_path().string()<<'\n';// converted it to string cuz directly printing the current_path() adds quotation marks
+            std::cout<<fs::current_path().string()<<'\n';// converted it to string cuz directly printing the current_path() adds quotation marks
         }
         else if(commands_arguments[0]=="cd"){
             fs::path destination = commands_arguments[1];
@@ -140,12 +144,12 @@ int main(){
                 fs::current_path(home_dir);
             } 
             else if(entry.exists()) fs::current_path(destination);
-            else cout<<"cd: "<<destination.string()<<": No such file or directory"<<"\n";
+            else std::cout<<"cd: "<<destination.string()<<": No such file or directory"<<"\n";
         }
 
         else if(bool_program_existence(paths, commands_arguments[0])){// command execution
-            string final_command_path = command_path.string();
-            std:string space = " ";
+            std::string final_command_path = command_path.string();
+            std::string space = " ";
 
             for(int i=1; i<commands_arguments.size(); i++){// the system method takes the command and the argument together as one single character array. so appending the command with a space and the argument and converting it to character array using c_str and then passing into system method
                 final_command_path += space + commands_arguments[i];
@@ -156,7 +160,7 @@ int main(){
         
 
         else{
-            cout<<command<<": command not found" << endl;
+            std::cout<<command<<": command not found" << std::endl;
         }
     }
 
